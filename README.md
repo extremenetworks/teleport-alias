@@ -15,11 +15,15 @@ We'll add alias access each of kubernetes clusters
 2. **Run the Command**:
    Use the `tkl` alias to load aliases and log into a cluster:
    ```bash
-   tkl remote
+   tkl stage
    ```
 
 3. **Validate Aliases**:
    Once the script completes, aliases will be available in your shell. For example:
    ```bash
-   ka get po
+   alias
+   tsh status
+   tsh kube ls
+   
+   k get pod
    ```
