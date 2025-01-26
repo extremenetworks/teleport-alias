@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # GitHub repository details
-REPO_URL="https://github.com/deusxanima/alias-examples.git"
+REPO_URL="https://github.com/extremenetworks/teleport-alias.git"
 CLONE_DIR="${HOME}/.alias_repo"
 TEMP_ALIAS_FILE="${HOME}/.temp_aliases"
 
