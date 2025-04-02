@@ -16,4 +16,4 @@ alias kn='kubectl -n nvo'
 alias kp='kubectl -n oh-portal'
 alias ks='kubectl -n sdwan'
 alias kw='kubectl -n wips'
-alias kws='kubectl -n workspace
+alias kws='kubectl -n workspace'
