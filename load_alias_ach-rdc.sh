@@ -10,4 +10,4 @@ alias kmsp='kubectl -n msp4xiq'
 alias kn='kubectl -n nvo'
 alias kp='kubectl -n ach-portal'
 alias kubectl-a3='kubectl -n a3-ach'
-alias kw='kubectl -n wips
+alias kw='kubectl -n wips'
