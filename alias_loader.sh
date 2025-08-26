@@ -34,6 +34,20 @@ update_repo() {
 clear_aliases
 update_repo
 
+# Handle special debug command
+if [ "$CLUSTER" = "debug" ]; then
+    ALIAS_FILE="$CLONE_DIR/load_alias_debug.sh"
+    if [ -f "$ALIAS_FILE" ]; then
+        echo "Executing debug command from $ALIAS_FILE..."
+        # Execute the command directly instead of sourcing as aliases
+        bash "$ALIAS_FILE"
+    else
+        echo "Debug file not found: $ALIAS_FILE"
+        return 1
+    fi
+    return 0
+fi
+
 # Determine the alias file based on the cluster name
 ALIAS_FILE="$CLONE_DIR/load_alias_${CLUSTER}.sh"
 if [ -f "$ALIAS_FILE" ]; then
