@@ -3,7 +3,7 @@ kubectl get ns debug >/dev/null 2>&1 || kubectl create ns debug
 pod_name=$(whoami)-middleware-debug-pod
 namespace="debug"
 image="081731760779.dkr.ecr.us-east-1.amazonaws.com/xcloudiq/middleware-access-util:25.9.1-14"
-gcr_clusters=("ach-rdc" "aca-rdc")
+gcr_clusters=("aca-rdc" "ach-rdc" "agb-rdc" "af-rdc" "ava-rdc" "ia-gcp-rdc" "kc-rdc" "nl-gcp-rdc" "sg-gcp-rdc")
 
 current_cluster=$(tsh status 2>/dev/null | awk -F':' '/Kubernetes cluster/ {gsub(/^[ \t]+/, "", $2); print $2}')
 if [[ -z "${current_cluster}" ]]; then
