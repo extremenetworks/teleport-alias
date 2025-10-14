@@ -2,7 +2,7 @@ kubectl get ns debug >/dev/null 2>&1 || kubectl create ns debug
 
 pod_name=$(whoami)-middleware-debug-pod
 namespace="debug"
-image="081731760779.dkr.ecr.us-east-1.amazonaws.com/xcloudiq/middleware-access-util:25.9.1-14"
+image="081731760779.dkr.ecr.us-east-1.amazonaws.com/xcloudiq/middleware-access-util:25.9.1-15"
 gcr_clusters=("aca-rdc" "ach-rdc" "agb-rdc" "af-rdc" "ava-rdc" "ia-gcp-rdc" "kc-rdc" "nl-gcp-rdc" "sg-gcp-rdc")
 
 current_cluster=$(tsh status 2>/dev/null | awk -F':' '/Kubernetes cluster/ {gsub(/^[ \t]+/, "", $2); print $2}')
@@ -13,7 +13,7 @@ if [[ -z "${current_cluster}" ]]; then
 fi
 current_cluster=$(echo "$current_cluster" | sed -E 's/^["[:space:]]+|["[:space:]]+$//g')
 if [[ "${gcr_clusters[*]}" =~ "${current_cluster}" ]]; then
-  image="gcr.io/prod-hm/xcloudiq/middleware-access-util:25.9.1-14"
+  image="gcr.io/prod-hm/xcloudiq/middleware-access-util:25.9.1-15"
 fi
 
 status=$(kubectl get pod "$pod_name" -n "$namespace" -o jsonpath='{.status.phase}' 2>/dev/null)
