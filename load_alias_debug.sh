@@ -12,9 +12,12 @@ if [[ -z "${current_cluster}" ]]; then
   exit 1
 fi
 current_cluster=$(echo "$current_cluster" | sed -E 's/^["[:space:]]+|["[:space:]]+$//g')
-if [[ "${gcr_clusters[*]}" =~ "${current_cluster}" ]]; then
-  image="gcr.io/prod-hm/xcloudiq/middleware-access-util:25.9.1-15"
-fi
+for cluster in "${gcr_clusters[@]}"; do
+  if [ "$cluster" == "$current_cluster" ]; then
+    image="gcr.io/prod-hm/xcloudiq/middleware-access-util:25.9.1-15"
+    break
+  fi
+done
 
 status=$(kubectl get pod "$pod_name" -n "$namespace" -o jsonpath='{.status.phase}' 2>/dev/null)
 if [ "$status" != "Running" ]; then
