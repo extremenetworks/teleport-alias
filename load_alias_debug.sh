@@ -1,6 +1,7 @@
 kubectl get ns debug >/dev/null 2>&1 || kubectl create ns debug
 
-pod_name=$(whoami)-middleware-debug-pod
+# Sanitize whoami output: convert to lowercase, replace invalid chars with hyphens, trim edges
+pod_name=$(whoami | tr '[:upper:]' '[:lower:]' | tr -cs '[:alnum:]' '-' | sed 's/-*$//;s/^-*//')-middleware-debug-pod
 namespace="debug"
 image="081731760779.dkr.ecr.us-east-1.amazonaws.com/xcloudiq/middleware-access-util:25.9.1-15"
 gcr_clusters=("aca-rdc" "ach-rdc" "agb-rdc" "af-rdc" "ava-rdc" "ia-gcp-rdc" "kc-rdc" "nl-gcp-rdc" "sg-gcp-rdc")
