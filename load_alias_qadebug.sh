@@ -15,7 +15,7 @@ fi
 current_cluster=$(echo "$current_cluster" | sed -E 's/^["[:space:]]+|["[:space:]]+$//g')
 for cluster in "${gcr_clusters[@]}"; do
   if [ "$cluster" == "$current_cluster" ]; then
-    image="gcr.io/prod-hm/xcloudiq/middleware-access-util:25.9.1-15"
+    image="gcr.io/prod-hm/xcloudiq/middleware-access-util:25.9.4-20"
     break
   fi
 done
