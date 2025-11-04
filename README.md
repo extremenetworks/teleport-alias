@@ -50,6 +50,11 @@ The alias *.sh name convention as: load_alias_{cluster_name}-{gdc/rdc}.sh
 *Windows Setup*
 Windows users can use Git Bash, PowerShell, or Windows Subsystem for Linux (WSL).
 **Using Git Bash**
+1️⃣ Open Git Bash or WSL
+
+2️⃣ Edit your bash profile
+
+Run:
 1. Open Git Bash. Edit ~/.bashrc (or ~/.bash_profile) using:
    ```bash
    nano ~/.bashrc
@@ -57,25 +62,28 @@ Windows users can use Git Bash, PowerShell, or Windows Subsystem for Linux (WSL)
 2. **Add the function of alias**
    ```bash
    tkl() {
-     # Unset any existing Teleport session context so you can switch clusters
-     eval $(tsh env --unset)
-     
-     # Update your alias repository, cloning if necessary
-     git -C ~/.my_private_alias_repo pull >/dev/null 2>&1 || \
-       git clone git@github.com:extremenetworks/teleport-alias.git ~/.my_private_alias_repo
-     
-     # Load the appropriate alias loader with any passed arguments
-     source ~/.my_private_alias_repo/alias_loader.sh "$@"
+   # Clear any existing Teleport session
+   eval $(tsh env --unset)
+
+   # Pull or clone alias repo
+   git -C ~/.my_private_alias_repo pull >/dev/null 2>&1 || \
+      git clone git@github.com:extremenetworks/teleport-alias.git ~/.my_private_alias_repo
+
+   # Load alias loader with args
+   source ~/.my_private_alias_repo/alias_loader.sh "$@"
    }
    ```
+   Save with Ctrl+O, then Ctrl+X.
+
 3. **Apply changes**
    ```bash
    source ~/.bashrc
    ```
 4. **User `tkl`**
    ```bash
-   tkl eu0-gdc
    tkl stage-rdc
+   tkl eu0-gdc
+
    ```
 5. **Validate Aliases**:
    Once the script completes, aliases will be available in your shell. For example:
@@ -85,3 +93,32 @@ Windows users can use Git Bash, PowerShell, or Windows Subsystem for Linux (WSL)
    tsh kube ls
    k get pod
    ```
+
+** If you want it to work in PowerShell too
+You’ll need a PowerShell-style function instead of the Bash one.
+Here’s a compatible version you can place in your PowerShell profile (notepad $PROFILE):
+```bash
+function tkl {
+    # Clear existing Teleport session
+    tsh env --unset | Invoke-Expression
+
+    # Pull or clone alias repo
+    if (Test-Path "$HOME\.my_private_alias_repo") {
+        git -C "$HOME\.my_private_alias_repo" pull | Out-Null
+    } else {
+        git clone git@github.com:extremenetworks/teleport-alias.git "$HOME\.my_private_alias_repo"
+    }
+
+    # Load alias loader script
+    . "$HOME\.my_private_alias_repo\alias_loader.ps1"
+}
+```
+Then apply changes:
+```bash
+. $PROFILE
+```
+Now you can run:
+```bash
+tkl eu0-gdc
+tkl stage-rdc
+```
